@@ -1,3 +1,3 @@
 package ru.protei.yamasipovdd.domain
 
-class Note(var title: String, var text: String)
+data class Note(val title: String, val text: String)

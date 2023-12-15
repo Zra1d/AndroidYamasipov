@@ -1,4 +1,5 @@
 package ru.protei.yamasipovdd
+
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -10,9 +11,9 @@ class NotesViewModel : ViewModel() {
 
     private val _notes = mutableStateOf<List<Note>>(
         listOf(
-            Note("Title 1", "Text 1"),
-            Note("Title 2", "Text 2"),
-            Note("Title 3", "Text 3")
+            Note("Заголовок 1", "Текст 1"),
+            Note("Заголовок 2", "Текст 2"),
+            Note("Заголовок 3", "Текст 3")
         )
     )
     val notes: State<List<Note>> = _notes
@@ -23,5 +24,22 @@ class NotesViewModel : ViewModel() {
 
     fun addNote(note: Note) {
         _notes.value = _notes.value + listOf(note)
+        _selected.value = note
+    }
+
+    fun onNoteChange(title: String, text: String) {
+        _selected.value?.let { editedNote ->
+            _selected.value = editedNote.copy(title = title, text = text)
+        }
+    }
+
+    fun onNoteSelected(note: Note) {
+        println("onNoteSelected: $note")
+        _selected.value = note
+    }
+
+    fun onAddNoteClicked() {
+        val newNote = Note("Новый Заголовок", "Новый Текст")
+        addNote(newNote)
     }
 }
